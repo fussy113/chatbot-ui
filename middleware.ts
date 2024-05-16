@@ -11,6 +11,10 @@ export async function middleware(request: NextRequest) {
   );
 
   console.info(
+    `IP_WHITE_LIST: ${process.env.IP_WHITE_LIST}`
+  );
+
+  console.info(
     `IP White List: ${JSON.stringify(Array.from(ipWhiteList))}`
   );
 
@@ -23,7 +27,7 @@ export async function middleware(request: NextRequest) {
     );
   } else {
     console.info(
-      `Access not allowed`
+      `Access not allowed ${request.ip}`
     );
     return new NextResponse(null, { status: 401 });
   }
