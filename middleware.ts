@@ -4,6 +4,30 @@ import { NextResponse, type NextRequest } from "next/server"
 import i18nConfig from "./i18nConfig"
 
 export async function middleware(request: NextRequest) {
+  const ipWhiteList = new Set(
+    process.env.IP_WHITE_LIST?.split(",").map((item: string) => {
+      return item.trim();
+    })
+  );
+
+  console.info(
+    `IP White List: ${JSON.stringify(Array.from(ipWhiteList))}`
+  );
+
+  if (
+    request.ip &&
+    ipWhiteList.has(request.ip as string)
+  ) {
+    console.info(
+      `Access allowed: ${request.ip} ${request.nextUrl.host}`
+    );
+  } else {
+    console.info(
+      `Access not allowed`
+    );
+    return new NextResponse(null, { status: 401 });
+  }
+
   const i18nResult = i18nRouter(request, i18nConfig)
   if (i18nResult) return i18nResult
 

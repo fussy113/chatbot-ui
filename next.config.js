@@ -27,6 +27,9 @@ module.exports = withBundleAnalyzer(
     },
     experimental: {
       serverComponentsExternalPackages: ["sharp", "onnxruntime-node"]
-    }
+    },
+    env: {
+      IP_WHITE_LIST: process.env.IP_WHITE_LIST,
+    },
   })
 )
