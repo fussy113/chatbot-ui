@@ -10,22 +10,10 @@ export async function middleware(request: NextRequest) {
     })
   );
 
-  console.info(
-    `IP_WHITE_LIST: ${process.env.IP_WHITE_LIST}`
-  );
-
-  console.info(
-    `IP White List: ${JSON.stringify(Array.from(ipWhiteList))}`
-  );
-
   if (
     request.ip &&
-    ipWhiteList.has(request.ip as string)
+    !ipWhiteList.has(request.ip as string)
   ) {
-    console.info(
-      `Access allowed: ${request.ip} ${request.nextUrl.host}`
-    );
-  } else {
     console.info(
       `Access not allowed ${request.ip}`
     );
